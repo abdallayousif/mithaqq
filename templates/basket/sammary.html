@@ -1,0 +1,136 @@
+{% extends "../home/base.html" %} 
+{% load static %}
+{% block title %}Basket Summary {% endblock title %}
+{% block contant %}
+  <!-- Cart Start -->
+  <div class="cart-page">
+    <div class="container-fluid">
+        <div class="row">
+          <div class="col-lg-4">
+            <div class="cart-page-inner cart-page-innerme">
+                <div class="row">
+                    <div class="col-md-12">
+                        <div class="coupon">
+                            <input type="text" placeholder="ادخل الكود">
+                            <button>استعمل</button>
+                        </div>
+                    </div>
+                    <div class="col-md-12">
+                        <div class="cart-summary">
+                            <div class="cart-content">
+                                <h1>ملخص السلة</h1>
+                                <p>المجموع الكـلي :</p>
+                                
+                                <h2>الجمله:</h2>
+                                <span class="" id="subtotal">{{ basket.get_total_price }}</span> 
+                            </div>
+                            <div class="cart-btn">
+                                <a href="{% url 'payment:basket' %}"><button>ادفع</button></a>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+            <div class="col-lg-8">
+                <div class="cart-page-inner">
+                    <div class="table-responsive">
+                      {% for item in basket %}
+                      {% with  product=item.product  %}
+                        <table data-index="{{product.id}}" class="table table-bordered tablemy product_item">
+                            <thead class="thead-dark">
+                                <tr>
+                                    <th>المنتج</th>
+                                    <th>السعر</th>
+                                    <th>الكميه</th>
+                                    <th>المجموع</th>
+                                    <th>تعديل</th>
+                                    <th>حذف</th>
+                                </tr>
+                            </thead>
+                            <tbody class="align-middle">
+                                <tr>
+                                    <td>
+                                        <div class="img">
+                                            <a href="{{product.get_absolute_url}}"><img src="{{product.image.url}}" alt="Image"></a>
+                                            <p>{{product.title|title}}</p>
+                                        </div>
+                                    </td>
+                                    <td>SD{{product.price}}</td>
+                                    <td>
+                                        <select  id="select{{product.id}}">
+                                          <option selected>
+                                              {{item.qty}}
+                                              {{item.markid}}
+                                          </option>
+                                          <option value="1">1</option>
+                                          <option value="2">2</option>
+                                          <option value="3">3</option>
+                                          <option value="4">4</option>
+                                          <option value="5">5</option>
+                                        </select>
+                                    </td>
+                                    <td>SD<span id="total_price">{{item.total_price}}</span></td>
+                                    <td><button id="update-button" class="update-button" data-index="{{product.id}}"><i class="fas fa-pen-alt"></i></button></td>
+                                    <td><button id="delete-button" class="delete-button" data-index="{{product.id}}"><i class="fa fa-trash "></i></button></td>
+                                </tr>
+                            </tbody>
+                        </table>
+                      {% endwith %}
+                      {% endfor %}
+                    </div>
+                </div>
+            </div>
+        
+        </div>
+    </div>
+</div>
+
+<script >
+    // delete item
+    $(document).on('click', '.delete-button', function (e){
+        e.preventDefault(); 
+        var proid = $(this).data('index');
+        $.ajax({
+          type: 'POST',
+          url: '{% url "basket:basket_delete" %}',
+          data: {
+              productid: $(this).data('index'),
+              csrfmiddlewaretoken: "{{csrf_token}}",
+              action: 'post'
+          },
+          success: function (json){
+              $('.product_item[data-index="'+ proid +'"]').remove();
+              document.getElementById('basket-qty').innerHTML = json.qty;
+              document.getElementById('subtotal').innerHTML = json.subtotal;
+          },
+          error: function (xhr, errmsg , err){}
+        });
+      });
+
+      // update item
+    $(document).on('click', '.update-button', function (e){
+        e.preventDefault(); 
+        var proid = $(this).data('index');
+        $.ajax({
+          type: 'POST',
+          url: '{% url "basket:basket_update" %}',
+          data: {
+              productid: $(this).data('index'),
+              productqty: $('#select'+ proid + ' option:selected').text(),
+              csrfmiddlewaretoken: "{{csrf_token}}",
+              action: 'post'
+          },
+          success: function (json){
+            document.getElementById('basket-qty').innerHTML = json.qty;
+            document.getElementById('subtotal').innerHTML = json.subtotal;
+           
+          },
+          error: function (xhr, errmsg , err){}
+        });
+      })
+</script>
+<!-- Cart End -->
+{% endblock contant %}
+   
+

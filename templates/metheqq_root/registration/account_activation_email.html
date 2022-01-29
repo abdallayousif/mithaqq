@@ -1,0 +1,8 @@
+{% autoescape off %}
+
+Hi {{ user.user_name }},   تم انشاء الحساب , اذهب الي الرابط واكمل تنشيط الحساب 
+
+http://{{ domain }}{% url 'metheqq_root:activate' uidb64=uid token=token %}
+
+
+{% endautoescape %}

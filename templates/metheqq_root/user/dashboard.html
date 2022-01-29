@@ -1,0 +1,169 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mithaqq</title>
+  <link rel="stylesheet" href="{% static 'metheqq_root/assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'metheqq_root/assets/css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'metheqq_root/assets/css/glightbox.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'metheqq_root/slick/slick/slick.css' %}"/>
+  <link rel="stylesheet" href="{% static 'metheqq_root/slick/slick/slick-theme.css' %}"/>
+  <script src="{% static 'metheqq_root/assets/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'metheqq_root/assets/js/index.js' %}"></script>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet"> 
+
+
+  <style>
+   
+  
+    .sub{
+        text-align: right !important;
+    }
+    #map {
+      min-width: 300px;
+      min-height: 232px;
+      width: 100%;
+      height: 69%;
+    }
+
+    .header {
+        background-color: #F5F5F5;
+        color: #36A0FF;
+        height: 70px;
+        font-size: 27px;
+        padding: 10px;
+        text-align: right !important;
+    }
+    .panel-body{
+        text-align: right !important;
+    }
+</style>
+</head>
+<body style="background-color: rgb(20, 20, 20);">
+<!-- ////////////////////////////////////////////////////////////////////////////////////////
+                               START SECTION 1 - THE NAVBAR SECTION  
+/////////////////////////////////////////////////////////////////////////////////////////////-->
+<nav class="navbar navbar-expand-lg navbar-dark menu shadow fixed-top" >
+    <div class="container">
+      <a class="navbar-brand" href="">
+        <img src="{% static 'metheqq_root/images/IMG-20211223-WA0000.jpg' %}" alt="logo image">
+        <a class="login">
+          <i class="fa fa-shopping-cart">
+          </i><span>تسوق</span>
+        </a>
+        <a href="{% url 'metheqq_root:dashboard' %}" class="login">
+          <i class="fas fa-user"></i>
+          <span>الحساب</span>
+        </a>
+        {% if user.is_authenticated %}
+        <a class="login" href="{% url 'metheqq_root:logout' %}">
+          <i class="fas fa-door-closed"></i>
+          <span> خروج </span>   
+        </a>
+        {% else %}
+        <a href="{% url 'metheqq_root:login' %}" class="login">
+          <i class="fas fa-door-open"></i>
+          <span> دخول </span>
+        </a>
+        {% endif %}
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">الرئيسة</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">من نحن</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonials">المدراء</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">خدماتنا</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portfolio">شركاتنا</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">اتصل بنا</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+
+   <main class="pt-5 dir" style="margin-top: 100px;">
+       <div class="container" style="max-width: 1000px">
+           <div class="col-12">
+                <h1 style="color: #cd801d;" class="h2">صفحتك الشخصية</h1>
+           </div>
+           <div class="col-12 d-flex justify-content-between">
+               <div style="color: #cd801d;">تعرف علي <span> مبيعاتك </span>  ومعلوماتك الشخصية </div>
+               <div><a style="color: #cd801d;" href="{% url 'metheqq_root:edit_details' %}">تغير التفاصيل</a></div>
+           </div>
+        <hr />
+       </div>
+       <div class="container dir" style="max-width: 1000px">
+   
+
+       </div>
+   </main>
+
+
+   <script  src="{% static 'metheqq_root/assets/vendors/js/glightbox.min.js' %}"></script>  
+   <script  src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+   <script  src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+   <script  src="{% static 'metheqq_root/slick/slick/slick.min.js' %}"></script>
+   <script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbWzQbvTnAdhcRUr4wZa3BOfAnDjaQWWk&callback=initMap"async></script>
+   
+   
+   <script type="text/javascript">
+         const lightbox = GLightbox({
+           'touchNavigation': true,
+           'href': 'https://mithaqq.herokuapp.com/static/metheqq_root/images/mithaqq.mp4',
+           'type': 'video',
+           'source': 'local', //vimeo, youtube or local
+           'width': 900,
+           'autoPlayVideos': 'true',
+   });
+   
+   $(document).ready(function(){
+     $('.youerclass').slick({
+         dots: true,
+         autoplay:true,
+         centerMode: true,
+         centerPadding: '60px',
+         slidesToShow: 3,
+         responsive: [
+           {
+             breakpoint: 768,
+             settings: {
+               arrows: false,
+               centerMode: true,
+               centerPadding: '40px',
+               slidesToShow: 3
+             }
+           },
+           {
+             breakpoint: 480,
+             settings: {
+               arrows: false,
+               centerMode: true,
+               centerPadding: '40px',
+               slidesToShow: 1
+             }
+           }
+         ]
+     });
+   
+   });
+   
+   function videoUrl(hmmmmm){
+     document.getElementById('vidslid').src = hmmmmm;
+   }
+   
+       </script>
+        <script src="{% static 'metheqq_root/assets/js/bootstrap.bundle.min.js' %}"></script>
+   </body>
+   </html> 

@@ -1,0 +1,182 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Mithaqq</title>
+  <link rel="stylesheet" href="{% static 'metheqq_root/assets/css/style.css' %}">
+  <link rel="stylesheet" href="{% static 'metheqq_root/assets/css/fontawesome.css' %}">
+  <link rel="stylesheet" href="{% static 'metheqq_root/assets/css/glightbox.min.css' %}" />
+  <link rel="stylesheet" href="{% static 'metheqq_root/slick/slick/slick.css' %}"/>
+  <link rel="stylesheet" href="{% static 'metheqq_root/slick/slick/slick-theme.css' %}"/>
+  <script src="{% static 'metheqq_root/assets/js/glightbox.min.js' %}"></script>
+  <script src="{% static 'metheqq_root/assets/js/index.js' %}"></script>
+
+
+  <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Lateef&display=swap" rel="stylesheet"> 
+
+
+  <style>
+   
+  
+    .sub{
+        text-align: right !important;
+    }
+    #map {
+      min-width: 300px;
+      min-height: 232px;
+      width: 100%;
+      height: 69%;
+    }
+
+    .header {
+        background-color: #F5F5F5;
+        color: #36A0FF;
+        height: 70px;
+        font-size: 27px;
+        padding: 10px;
+        text-align: right !important;
+    }
+    .panel-body{
+        text-align: right !important;
+    }
+</style>
+</head>
+<body>
+<!-- ////////////////////////////////////////////////////////////////////////////////////////
+                               START SECTION 1 - THE NAVBAR SECTION  
+/////////////////////////////////////////////////////////////////////////////////////////////-->
+<nav class="navbar navbar-expand-lg navbar-dark menu shadow fixed-top" >
+    <div class="container">
+      <a class="navbar-brand" href="">
+        <img src="{% static 'metheqq_root/images/IMG-20211223-WA0000.jpg' %}" alt="logo image">
+      </a>
+      <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarNav" aria-controls="navbarNav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse justify-content-end" id="navbarNav">
+        <ul class="navbar-nav">
+          <li class="nav-item"><a class="nav-link active" aria-current="page" href="#">الرئيسة</a></li>
+          <li class="nav-item"><a class="nav-link" href="#services">من نحن</a></li>
+          <li class="nav-item"><a class="nav-link" href="#testimonials">المدراء</a></li>
+          <li class="nav-item"><a class="nav-link" href="#faq">خدماتنا</a></li>
+          <li class="nav-item"><a class="nav-link" href="#portfolio">شركاتنا</a></li>
+          <li class="nav-item"><a class="nav-link" href="#contact">اتصل بنا</a>
+          </li>
+        </ul>
+      </div>
+    </div>
+  </nav>
+ <!-- Login Start -->
+  <div class="container-fluid" style="padding-top: 100px; ">
+      <div class="row no-gutter">
+          <div class="col-md-12">
+              <div class="login d-flex align-item-center py-5" style="width: 100%;
+              direction: rtl;">
+                  <div class="container">
+                      <div class="row">
+                          <div class="col-12 col-lg-7 mx-auto">
+                              <form class="account-form p-4 rounded col-lg-10 mx-auto" action="." method="post" style="text-align: right;">
+                                  {% csrf_token %}
+                                  <h3 class="mb-2 font-weight-bold"> انشاء حساب</h3>
+                                  <p class="mb-4">حساب مجاني ولن ياخذ زمن</p>
+
+                                  {% if form.errors %}
+                                  <p>من فضلك صحح هذا الخطاء</p>
+                                  {% for field in form %}
+                                  {% if field.errors %} 
+                                  <div class="alert alert-primary" role="alert">
+                                      {{ field.label }}: {{ field.errors|striptags}}
+                                  </div>
+                                  {% endif %}
+                                  {% endfor %}
+                                  {% endif %}
+                                  
+                                  <label > <span class="text-muted small">(مطلوب)</span>{{ form.first_name.label }}</label>
+                                  {{ form.first_name }}
+                                  <label ><span class="text-muted small">(مطلوب)</span>{{ form.user_name.label }}</label>
+                                  {{ form.user_name }}
+                                  <label ><span class="text-muted small">(مطلوب)</span>{{ form.email.label }}</label>
+                                  {{ form.email }}
+                                  <label> <span class="text-muted small">(مطلوب)</span>{{ form.password.label }}</label>
+                                  {{ form.password }}
+                                  <label > <span class="text-muted small">(مطلوب)</span>{{ form.password2.label }}</label>
+                                  {{ form.password2 }}
+                                 
+                                    
+                                  <button class="btn btn-primary btn-block py-2 mb-4 mt-5 fw500 w-100" type="submit">انشاء</button>
+                                  <p class="text-center">
+                                      <a href=""> امتلك حساب سجل الدخول </a>
+                                  </p>
+                              </form>
+                          </div>
+                      </div>
+                  </div>
+              </div>
+          </div>
+      </div>
+  </div>
+<!-- Login End -->
+
+<script  src="{% static 'metheqq_root/assets/vendors/js/glightbox.min.js' %}"></script>  
+<script  src="//code.jquery.com/jquery-1.11.0.min.js"></script>
+<script  src="//code.jquery.com/jquery-migrate-1.2.1.min.js"></script>
+<script  src="{% static 'metheqq_root/slick/slick/slick.min.js' %}"></script>
+<script  src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBbWzQbvTnAdhcRUr4wZa3BOfAnDjaQWWk&callback=initMap"async></script>
+
+
+<script type="text/javascript">
+      const lightbox = GLightbox({
+        'touchNavigation': true,
+        'href': 'https://mithaqq.herokuapp.com/static/metheqq_root/images/mithaqq.mp4',
+        'type': 'video',
+        'source': 'local', //vimeo, youtube or local
+        'width': 900,
+        'autoPlayVideos': 'true',
+});
+
+$(document).ready(function(){
+  $('.youerclass').slick({
+      dots: true,
+      autoplay:true,
+      centerMode: true,
+      centerPadding: '60px',
+      slidesToShow: 3,
+      responsive: [
+        {
+          breakpoint: 768,
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 3
+          }
+        },
+        {
+          breakpoint: 480,
+          settings: {
+            arrows: false,
+            centerMode: true,
+            centerPadding: '40px',
+            slidesToShow: 1
+          }
+        }
+      ]
+  });
+
+});
+
+function videoUrl(hmmmmm){
+  document.getElementById('vidslid').src = hmmmmm;
+}
+
+    </script>
+     <script src="{% static 'metheqq_root/assets/js/bootstrap.bundle.min.js' %}"></script>
+</body>
+</html> 

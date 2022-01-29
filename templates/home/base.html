@@ -1,0 +1,194 @@
+{% load static %}
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta name="theme-color" content="#7952b3">
+    <title> {% block title %}My Shop{% endblock  %}</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
+    <link rel="stylesheet" href="{% static 'css/animeat.css'%}">
+    <link href="{% static 'css/all.min.css' %}" rel="stylesheet" >
+    <link rel="stylesheet" href="{% static 'slick/slick/slick.css'%}">
+    <link rel="stylesheet" href="{% static 'slick/slick/slick-theme.css'%}">
+    <link rel="stylesheet" href="{% static 'css/main.css' %}">
+
+    <script type="text/javascript" src='{% static "js/jquery.js" %}'></script>
+    <script type="text/javascript" src='{% static "js/jquery.js" %}'></script>
+    <script type="text/javascript" src="{% static 'js/jquery-migrate-1.2.1.min.js' %}"></script>
+    <script src='{% static "js/popper.js" %}'></script>
+    <script type="text/javascript" src="{% static 'slick/slick/slick.min.js' %}"></script>
+    <script src='{% static "js/bootstrap.bundle.min.js" %}'></script>
+    <script src='{% static "lib/easing/easing.min.js" %}'></script>
+    <script src='{% static "js/all.min.js" %}'></script>
+    <script src='{% static "js/main.js" %}'></script>
+</head>
+<body>
+  <header>
+        
+    <nav class="navbar navbar-expand-lg navbar-light bg-light text-infomy ">
+      <div class="container-fluid" >
+        <a class="navbar-brand" href="/"><div class="fontmy">Nile<span>Markt</span></div></a>
+        <a  type="button" href="{% url 'basket:basket_sammary' %}" class="btn btn-outline-secondary">
+          {% with total_qty=basket|length %}
+            <div id="basket-qty" class="d-inline-flex">
+                  {% if total_qty > 0  %}
+                    {{total_qty }}
+                  {% else %}
+                      0
+                  {% endif %} 
+            </div>  
+          {% endwith %}
+        <i class="fa fa-shopping-cart"></i>السلة</a>
+        {% if user.is_authenticated %}
+        <a type="button" href="{% url 'account:logout' %}" class="btn btn-outline-secondary"><i class="fas fa-sign-in-alt"></i>تسجيل الخروج</a>
+        {% else %}
+        <a type="button" href="{% url 'account:login' %}" class="btn btn-outline-secondary"><i class="fas fa-sign-in-alt"></i>تسجيل الدخول</a>
+        {% endif %}
+        <a type="button" href="{% url 'account:dashboard' %}" class="btn btn-outline-secondary"><i class="fas fa-user"></i>الحساب</a>
+        <button class="navbar-toggler" type="button" data-bs-toggle="collapse" data-bs-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+          <span class="navbar-toggler-icon"></span>
+        </button>
+        <div class="collapse navbar-collapse dir" id="navbarSupportedContent">
+          <ul class="navbar-nav me-auto mb-2 mb-lg-0" style="margin-right: 0 !important ">
+            <li class="nav-item">
+              <a class="nav-link active" aria-current="page" href="/market/shop">
+                <i class="fa fa-home  mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"></i>
+                <span>الرئيسية</span></a>
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="#">
+              <i class="fas fa-user-cog  mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"></i>
+                الادارة</a>
+            </li>
+            <li class="nav-item dropdown">
+              <a class="nav-link dropdown-toggle" href="#" id="navbarDropdown" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+              <i class="fab fa-product-hunt  mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"></i>
+                المنتجات
+              </a>
+              <ul class="dropdown-menu do" aria-labelledby="navbarDropdown">
+                  {% for c in catogeryes %}
+                      <li><a class="dropdown-item" href="{{ c.get_absolute_url }}">{{ c.name|title }}</a></li> 
+                  {% endfor %}
+              </ul>
+
+            </li>
+            <li class="nav-item">
+              <a class="nav-link" href="/">
+                <i class="fas fa-file-signature  mx-auto mb-1" width="24" height="24"><use xlink:href="#people-circle"></i>
+                اتصل بنا</a>
+            </li>
+          </ul>
+        </div>
+      </div>
+</div>
+    </nav>
+    
+</header>
+    <div id="contant">{% block contant %} {% endblock  %}</div>
+
+   <!-- Footer Start -->
+   <div class="footer">
+    <div class="container-fluid">
+        <div class="row">
+          
+    
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-widget">
+                    <h2>معلومات الشركة</h2>
+                    <ul>
+                        <li><a href="#">من نحن</a></li>
+                        <li><a href="#">شروط الخصوصية</a></li>
+                        <li><a href="#">الشروط والاحكام</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="footer-widget">
+                  <h2>تابعنا</h2>
+                  <div class="contact-info">
+                      <div class="social">
+                          <a href=""><i class="fab fa-twitter"></i></a>
+                          <a href=""><i class="fab fa-facebook-f"></i></a>
+                          <a href=""><i class="fab fa-linkedin-in"></i></a>
+                          <a href=""><i class="fab fa-instagram"></i></a>
+                          <a href=""><i class="fab fa-youtube"></i></a>
+                      </div>
+                  </div>
+              </div>
+          </div>
+
+            <div class="col-lg-3 col-md-6">
+                <div class="footer-widget">
+                    <h2>معلومات الشراء</h2>
+                    <ul>
+                        <li><a href="#">سياسات الدفع</a></li>
+                        <li><a href="#">سياسات التوصيل</a></li>
+                        <li><a href="#">سياسات الارجاع</a></li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="col-lg-3 col-md-6">
+              <div class="footer-widget">
+                  <h2>للتواصل</h2>
+                  <div class="contact-info">
+                      <p> بحري - شارع البلدية - عمارة وزارة العمل  <i class="fa fa-map-marker"></i></p>
+                      <a href="mailto:info@mithaqq.4.p.s.1@gmail.com?subject"> mithaqq.4.p.s.1@gmail.com <i class="fa fa-envelope"></i></a>
+                      <p>+249911095201 ,+249911095202<i class="fa fa-phone"></i></p>
+                  </div>
+              </div>
+          </div>
+        </div>
+        
+        <div class="row payment align-items-center">
+            <div class="col">
+                <div class="payment-security">
+                    <h2>بضمان:</h2>
+                    <img src="{% static 'img/cond.jpg' %}" alt="شروط الدفع" />
+                    <img src="{% static 'img/cond.jpg' %}" alt="Payment Security" />
+                    <img src="{% static 'img/cond.jpg' %}" alt="Payment Security" />
+                </div>
+            </div>
+            <div class="col">
+              <div class="payment-method">
+                  <h2>طرق الدفع:</h2>
+                  <img src="{% static 'img/bankak.png' %}" alt="Payment Method" />
+                  <img src="{% static 'img/cash.webp' %}" alt="Payment Method" />
+              </div>
+          </div>
+        </div>
+    </div>
+</div>
+<!-- Footer End -->
+
+<!-- Footer Bottom Start -->
+<div class="footer-bottom">
+    <div class="container">
+        <div class="row">
+          
+          <div class="col template-by">
+            <p> تم التصميم  <a href="https://htmlcodex.com"> ميثاق نوفيشين </a></p>
+          </div>
+            <div class="col copyright">
+                <p> حقوق النشر محفوظه &copy; <a href="/"> ميثاق 2021 </a>  </p>
+            </div>
+
+        </div>
+    </div>
+</div>
+<!-- Footer Bottom End -->         
+
+
+<script>
+  window.FontAwesomeConfig = {
+    searchPseudoElements: true
+  }
+</script>
+
+
+    
+</body>
+</html>

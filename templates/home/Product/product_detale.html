@@ -1,0 +1,174 @@
+{% extends "../base.html"  %}
+
+{% block contant %}
+
+     <!-- Product Detail Start -->
+     <div class="product-detail">
+        <div class="container-fluid">
+            <div class="row">
+                    <!-- Side Bar Start -->
+                    <div class="col-lg-4 sidebar">
+                        <div class="sidebar-widget widget-slider">
+                            <div class="sidebar-slider normal-slider">
+                                {% for pro in product %}
+                                <div class="product-item">
+                                    <div class="product-title">
+                                        <a href="{{ pro.get_absolute_url }}">{{ pro.title }}</a>
+                                        <div class="ratting">
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                            <i class="fa fa-star"></i>
+                                        </div>
+                                    </div>
+                                    <div class="product-image">
+                                        <a href="product-detail.html">
+                                            <img src="{{ pro.image.url }}" alt="Product Image">
+                                        </a>
+                                        <div class="product-action">
+                                            <a href="{{ pro.get_absolute_url }}"><i class="fa fa-cart-plus"></i></a>
+                                            <a href="{{ pro.get_absolute_url }}"><i class="fa fa-heart"></i></a>
+                                            <a href="{{ pro.get_absolute_url }}"><i class="fa fa-search"></i></a>
+                                        </div>
+                                    </div>
+                                    <div class="product-price">
+                                        <h3><span>SD</span>{{pro.price}}</h3>
+                                        <a class="btn" href="{{ pro.get_absolute_url }}"><i class="fa fa-shopping-cart"></i>Buy Now</a>
+                                    </div>
+                                </div>
+                                {% endfor %}
+                                
+                            </div>
+                        </div>
+                        
+                      
+                        
+                       
+                    </div>
+                <div class="col-lg-8">
+                    <div class="product-detail-top">
+                        <div class="row align-items-center">
+                            <div class="col-md-7">
+                                <div class="product-content content">
+                                    
+                                    <div class="title"><h2>{{ info.title }} </h2></div>
+                                   
+                                    <div class="ratting">
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>
+                                        <i class="fa fa-star"></i>                                        <i class="fa fa-star"></i>
+                                    </div>
+                                    <div class="price">
+                                        <h4>السعر:</h4>
+                                        <p>SD{{ info.price }} <span></span></p>
+                                        <p id='mark'>{{ marketerid.id }} <span></span></p>
+                                    </div>
+                                    <div class="">
+                                        <h4>الكمية:</h4>
+                                        <div class="sel">
+                                            <select  id="select">
+                                                <option value="1">1</option>
+                                                <option value="2">2</option>
+                                                <option value="3">3</option>
+                                                <option value="4">4</option>
+                                            </select>
+                                        </div>
+                                    </div>
+                                    <div class="p-size">
+                                        <h4>الدولاب:</h4>
+                                        <div class="btn-group btn-group-sm">
+                                            <option value="{{option.title}}">
+                                            {% for option in option%}
+                                              {% if option.type.sulg == 'dolyb' %}
+                                             
+                                                <select>{{option.title}}</select>
+                                            
+                                            <button value="{{ option.price }}" type="button" class="btn">{{option.title}}</button>
+                                              {% endif %}
+                                             {% endfor %}
+                                            </option>
+                                        </div> 
+                                    </div>
+                                    <div class="p-size">
+                                        <h4>السرير:</h4>
+                                        <div class="btn-group btn-group-sm">
+                                            {% for option in option%}
+                                              {% if option.type.sulg == 'sryr' %}
+                                            <button value="{{ option.price }}" type="button" class="btn">{{option.cat_id_id}}</button>
+                                              {% endif %}
+                                            {% endfor %}
+                                        </div> 
+                                    </div>
+                                    <div class="action">
+                                            <button type="button" class="btn btn-secondery btn-sm" id="add-button" value="{{ info.id }}"><i class="fa fa-shopping-cart"></i> اضافه  للسلة</button>
+                                            <button type="button" class="btn btn-secondery btn-sm" id="add-button" value="{{ info.id }}"><i class="fa fa-shopping-bag"></i>اشتري الان</button>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="col-md-5">
+                                <div class="product-slider-single normal-slider">
+                                    {% for f in photos%}
+                                      <img src=" {{ f.image.url }} " alt="Product Image">
+                                    {% endfor %}
+                                </div>
+                                <div class="product-slider-single-nav normal-slider">
+                                    {% for f in photos%}
+                                    <div class="slider-nav-img"><img src="{{ f.image.url }}" alt="Product Image"></div>
+                                    {% endfor %}
+
+                                </div>
+                            </div>
+                            
+                        </div>
+                    </div>
+                    
+                    <div class="row product-detail-bottom">
+                        <div class="col-lg-12">
+                            <ul class="nav nav-pills nav-justified">
+                                <li class="nav-item">
+                                    <a class="nav-link active" data-toggle="pill" href="#description">وصف النتج</a>
+                                </li>
+                            </ul>
+
+                            <div class="tab-content">
+                                <div id="description" class="container tab-pane active">
+                                    <h4>وصف المنتج</h4>
+                                    <p>
+                                        {{ info.description }}
+                                    </p>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                
+            
+                <!-- Side Bar End -->
+            </div>
+        </div>
+    </div>
+    <!-- Product Detail End -->
+    <script >
+        $(document).on('click', '#add-button', function (e){
+            e.preventDefault(); 
+            $.ajax({
+              type: 'POST',
+              url: '{% url "basket:basket_add" %}',
+              data: {
+                  productid: $('#add-button').val(),
+                  productqty:$('#select option:selected').text(),
+                  marketerid:$('#mark').text(),
+                  csrfmiddlewaretoken: "{{csrf_token}}",
+                  action: 'post'
+              },
+              success: function (json){
+                document.getElementById('basket-qty').innerHTML = json.qty
+              },
+              error: function (xhr, errmsg , err){}
+            });
+          })
+    </script>
+
+    {% endblock  %}
